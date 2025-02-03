@@ -3,12 +3,9 @@ package com.olawhales.whales_ecommerce.dto.request.usersRequest;
 import com.olawhales.whales_ecommerce.data.model.UserRole;
 import lombok.Data;
 
-import java.time.LocalDate;
-
 @Data
-public class UsersRequest {
-    private String firstName;
-    private String lastName;
+public class SignUpRequest {
+    private String userName;
     private String email ;
     private String password ;
     private String contact ;
@@ -31,20 +28,12 @@ public class UsersRequest {
         this.userRole = userRole;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public String getEmail() {
