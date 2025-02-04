@@ -3,7 +3,7 @@ package com.olawhales.whales_ecommerce.dto.request.goodsRequest.productRequest;
 import lombok.Data;
 
 @Data
-public class ProductGetByIdsRequest {
+public class GetSingleSellerRequest {
     private Long sellerId ;
     private Long productId ;
 }

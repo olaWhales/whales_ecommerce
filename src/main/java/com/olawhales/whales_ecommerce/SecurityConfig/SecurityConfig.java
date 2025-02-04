@@ -1,4 +1,4 @@
-package com.olawhales.whales_ecommerce;
+package com.olawhales.whales_ecommerce.SecurityConfig;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -32,7 +32,8 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(requests -> requests
                 .requestMatchers("/api/register/user/" , "/api/register/login").permitAll()
-                .anyRequest().authenticated())
+                        .requestMatchers("/Product/create").hasRole("SELLER")
+                        .anyRequest().authenticated())
                 .httpBasic(Customizer.withDefaults())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(corsFilter() , SessionManagementFilter.class);

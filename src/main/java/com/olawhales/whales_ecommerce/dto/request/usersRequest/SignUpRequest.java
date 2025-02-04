@@ -1,24 +1,47 @@
 package com.olawhales.whales_ecommerce.dto.request.usersRequest;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.olawhales.whales_ecommerce.data.model.UserRole;
 import lombok.Data;
 
+import java.time.LocalDate;
+
 @Data
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class SignUpRequest {
     private String userName;
     private String email ;
     private String password ;
     private String contact ;
-//    private LocalDate dateCreated ;
+    private LocalDate dateCreated ;
     private UserRole userRole ;
 
-//    public LocalDate getDateCreated() {
-//        return dateCreated;
-//    }
-//
-//    public void setDateCreated(LocalDate dateCreated) {
-//        this.dateCreated = dateCreated;
-//    }
+    private String businessAddress ;
+    private String companyName;
+
+    public String getCompanyName() {
+        return companyName;
+    }
+
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
+    }
+
+    public String getBusinessAddress() {
+        return businessAddress;
+    }
+
+    public void setBusinessAddress(String businessAddress) {
+        this.businessAddress = businessAddress;
+    }
+
+    public LocalDate getDateCreated() {
+        return dateCreated;
+    }
+
+    public void setDateCreated(LocalDate dateCreated) {
+        this.dateCreated = dateCreated;
+    }
 
     public UserRole getUserRole() {
         return userRole;
@@ -59,4 +82,6 @@ public class SignUpRequest {
     public void setContact(String contact) {
         this.contact = contact;
     }
+
+
 }
