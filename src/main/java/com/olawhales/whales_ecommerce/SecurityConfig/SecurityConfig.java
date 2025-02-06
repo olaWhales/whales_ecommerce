@@ -31,7 +31,7 @@ public class SecurityConfig {
         httpSecurity
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(requests -> requests
-                .requestMatchers("/api/register/user/" , "/api/register/login").permitAll()
+                .requestMatchers("/api/register/user/" ,"/api/register/login").permitAll()
                         .requestMatchers("/Product/create").hasRole("SELLER")
                         .anyRequest().authenticated())
                 .httpBasic(Customizer.withDefaults())

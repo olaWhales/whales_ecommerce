@@ -20,24 +20,8 @@ import org.springframework.stereotype.Service;
 public class ProductServiceImp implements ProductService{
     @Autowired
     private ProductRepository productRepository;
-//
-//    @Override
-//    public CreateProductResponse createProduct(CreateProductRequest productRequest) {
-//        Product product = new Product();
-//        product.setProductName(productRequest.getProductName());
-//        product.setProductDescription(productRequest.getProductDescription());
-//        product.setProductQuantity(productRequest.getProductQuantity());
-//        product.setProductPrice(productRequest.getProductPrice());
-//        productRepository.save(product);
-//
-//        CreateProductResponse response = new CreateProductResponse();
-//        response.setProductName(productRequest.getProductName());
-//        response.setProductDescription(productRequest.getProductDescription());
-//        response.setProductQuantity(productRequest.getProductQuantity());
-//        response.setProductPrice(productRequest.getProductPrice());
-//        return response;
-//    }
-public CreateProductResponse createProduct(CreateProductRequest productRequest) {
+
+    public CreateProductResponse createProduct(CreateProductRequest productRequest) {
     Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
     if (authentication == null || !authentication.isAuthenticated()) {
@@ -45,17 +29,13 @@ public CreateProductResponse createProduct(CreateProductRequest productRequest) 
     }
 
     Object principal = authentication.getPrincipal();
-
     if (!(principal instanceof Users)) {
         throw new IllegalArgumentException("Invalid user authentication");
     }
-
     Users user = (Users) principal;
-
     if (user.getUserRole() != UserRole.SELLER) {
         throw new IllegalArgumentException("You are not permitted to perform this action");
     }
-
     Product product = new Product();
     product.setProductName(productRequest.getProductName());
     product.setProductDescription(productRequest.getProductDescription());

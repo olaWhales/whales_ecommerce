@@ -1,5 +1,6 @@
 package com.olawhales.whales_ecommerce.controller;
 
+import com.olawhales.whales_ecommerce.dto.request.usersRequest.LoginRequest;
 import com.olawhales.whales_ecommerce.dto.request.usersRequest.SignUpRequest;
 import com.olawhales.whales_ecommerce.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,15 @@ public class RegistrationController{
     public ResponseEntity<?> registerUser(@RequestBody SignUpRequest registerRequest) {
         try{
             return new ResponseEntity<>(userService.register(registerRequest) , HttpStatus.CREATED);
+        }catch (Exception exception){
+            return new ResponseEntity<>(exception.getMessage() , HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
+        try{
+            return new ResponseEntity<>(userService.login(loginRequest) , HttpStatus.CREATED);
         }catch (Exception exception){
             return new ResponseEntity<>(exception.getMessage() , HttpStatus.BAD_REQUEST);
         }

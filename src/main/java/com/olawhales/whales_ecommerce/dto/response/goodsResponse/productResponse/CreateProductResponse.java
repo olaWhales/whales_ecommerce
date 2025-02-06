@@ -1,18 +1,21 @@
 package com.olawhales.whales_ecommerce.dto.response.goodsResponse.productResponse;
 
+import lombok.Data;
+
+@Data
 public class CreateProductResponse {
     private String productName;
     private String productDescription;
     private Double productPrice;
     private Integer productQuantity;
 
-    public String getProductName() {
-        return productName;
-    }
-
-    public void setProductName(String productName) {
-        this.productName = productName;
-    }
+//    public String getProductName() {
+//        return productName;
+//    }
+//
+//    public void setProductName(String productName) {
+//        this.productName = productName;
+//    }
 
     public String getProductDescription() {
         return productDescription;
