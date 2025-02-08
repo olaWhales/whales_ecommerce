@@ -35,11 +35,6 @@ public class Users {
     @Column(nullable = false)
     private LocalDateTime dateCreated;
 
-//    @PrePersist
-//    protected void onCreate() {
-//        this.dateCreated = LocalDateTime.now();
-//    }
-
     public Long getId() {
         return id;
     }

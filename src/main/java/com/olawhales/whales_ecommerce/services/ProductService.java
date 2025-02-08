@@ -10,7 +10,7 @@ public interface ProductService {
     CreateProductResponse createProduct(CreateProductRequest productRequest);
     DeleteProductResponse delete(DeleteProductRequest deleteProduct);
 
-    DeleteProductResponse delete(CreateProductRequest deleteProduct);
+//    DeleteProductResponse delete(CreateProductRequest deleteProduct);
 
     UpdateProductResponse update (UpdateProductRequest updateProduct);
     GetAllProductResponse getAll(GetAllProductsRequest getAll);

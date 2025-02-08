@@ -9,6 +9,8 @@ public class CreateProductRequest {
     private String productDescription;
     private Double productPrice;
     private Integer productQuantity;
+
+
 }
 
 

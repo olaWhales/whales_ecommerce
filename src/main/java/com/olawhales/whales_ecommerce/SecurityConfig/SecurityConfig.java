@@ -10,11 +10,13 @@ import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfiguration;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.session.SessionManagementFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -22,21 +24,25 @@ import org.springframework.web.filter.CorsFilter;
 
 @Configuration
 @EnableWebSecurity
-public class SecurityConfig {
+public class SecurityConfig extends WebSecurityConfiguration {
     @Autowired
-    private UserDetailsService userDetailsService ;
+    private JwtFilter jwtFilter ;
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity)throws Exception{
+    public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity, JwtFilter jwtFilter)throws Exception{
         httpSecurity
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(requests -> requests
                 .requestMatchers("/api/register/user/" ,"/api/register/login").permitAll()
-                        .requestMatchers("/Product/create").hasRole("SELLER")
+//                        .requestMatchers("/Product/create").permitAll()
+                        .requestMatchers("/Product/create/").hasAuthority("SELLER")
+                        .requestMatchers("/product/delete/").hasAuthority("SELLER")
                         .anyRequest().authenticated())
                 .httpBasic(Customizer.withDefaults())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .addFilterBefore(corsFilter() , SessionManagementFilter.class);
+//                .addFilterBefore(corsFilter() , SessionManagementFilter.class);
+//                        .addFilterBefore(jwtFilter , SessionManagementFilter.class);
+                        .addFilterBefore(jwtFilter , UsernamePasswordAuthenticationFilter.class);
         return httpSecurity.build();
     }
 

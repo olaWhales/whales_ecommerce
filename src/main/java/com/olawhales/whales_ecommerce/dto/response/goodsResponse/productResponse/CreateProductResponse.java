@@ -4,18 +4,27 @@ import lombok.Data;
 
 @Data
 public class CreateProductResponse {
+    private Long sellerId ;
     private String productName;
     private String productDescription;
     private Double productPrice;
     private Integer productQuantity;
 
-//    public String getProductName() {
-//        return productName;
+//    public Long getSellerId() {
+//        return sellerId;
 //    }
 //
-//    public void setProductName(String productName) {
-//        this.productName = productName;
+//    public void setSellerId(Long sellerId) {
+//        this.sellerId = sellerId;
 //    }
+
+    public String getProductName() {
+        return productName;
+    }
+
+    public void setProductName(String productName) {
+        this.productName = productName;
+    }
 
     public String getProductDescription() {
         return productDescription;

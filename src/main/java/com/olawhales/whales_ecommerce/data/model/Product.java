@@ -20,6 +20,16 @@ public class Product {
     @JsonBackReference
     private Seller seller;
 
+    private boolean isDeleted = false; // Soft delete
+
+    public boolean isDeleted() {
+        return isDeleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        isDeleted = deleted;
+    }
+
     public Long getId() {
         return id;
     }

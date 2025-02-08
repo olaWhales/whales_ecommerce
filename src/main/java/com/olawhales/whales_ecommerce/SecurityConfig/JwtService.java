@@ -4,6 +4,7 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +19,50 @@ import java.util.function.Function;
 
 @Service
 public class JwtService {
+
+//        @Value("${jwt.secret}")
+//        private String secretKey;  // Read from application.properties
+//
+//        public String generateToken(String username) {
+//            return Jwts.builder()
+//                    .subject(username)
+//                    .issuedAt(new Date(System.currentTimeMillis()))
+//                    .expiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 10)) // 10 hours expiration
+//                    .signWith(getKey())
+//                    .compact();
+//        }
+//
+//        private SecretKey getKey() {
+//            byte[] keyBytes = Base64.getDecoder().decode(secretKey);
+//            return Keys.hmacShaKeyFor(keyBytes);
+//        }
+//
+//        public String extractUsername(String token) {
+//            return extractClaim(token, Claims::getSubject);
+//        }
+//
+//        public boolean validateToken(String token, org.springframework.security.core.userdetails.UserDetails userDetails) {
+//            final String username = extractUsername(token);
+//            return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
+//        }
+//
+//        private boolean isTokenExpired(String token) {
+//            return extractExpiration(token).before(new Date());
+//        }
+//
+//        private Date extractExpiration(String token) {
+//            return extractClaim(token, Claims::getExpiration);
+//        }
+//
+//        private <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
+//            final Claims claims = Jwts.parser()
+//                    .verifyWith(getKey())
+//                    .build()
+//                    .parseSignedClaims(token)
+//                    .getPayload();
+//            return claimsResolver.apply(claims);
+//        }
+
     private String secreteKey = ""; // i just outcome this key here to put in the method below
     // i later cancelled this line above because it is out codding
     //this is a wy to generate the token
