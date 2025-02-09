@@ -84,9 +84,9 @@ public class ProductServiceImp implements ProductService{
         }
 
         product.setDeleted(true);
-        productRepository.save(product); // ✅ Save update instead of deleting
+        productRepository.save(product); //  Save update instead of deleting
 
-        // ✅ Return success response
+        //  Return success response
         DeleteProductResponse response = new DeleteProductResponse();
         response.setMessage("Product deleted successfully");
         return response;
@@ -145,7 +145,6 @@ public class ProductServiceImp implements ProductService{
             throw new IllegalArgumentException("No productsController found");
         }
         if (!user.getSeller().getId().equals(products.get(0).getSeller().getId())) {
-            System.out.println("This is the seller ID of authenticated user: " + user.getSeller());
             throw new IllegalArgumentException("You can only update your own products");
         }
 
