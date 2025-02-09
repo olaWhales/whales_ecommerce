@@ -5,6 +5,7 @@ import lombok.Data;
 @Data
 public class CreateProductResponse {
     private Long sellerId ;
+    private Long productId ;
     private String productName;
     private String productDescription;
     private Double productPrice;

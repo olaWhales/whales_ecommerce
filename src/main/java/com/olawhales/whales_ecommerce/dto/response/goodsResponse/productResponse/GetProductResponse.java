@@ -3,7 +3,7 @@ package com.olawhales.whales_ecommerce.dto.response.goodsResponse.productRespons
 import lombok.Data;
 
 @Data
-public class GetAllProductResponse {
+public class GetProductResponse {
     private Long sellerId;
     private String productName;
     private String productDescription;

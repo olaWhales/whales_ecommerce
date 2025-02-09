@@ -4,16 +4,14 @@ import com.olawhales.whales_ecommerce.data.model.*;
 import com.olawhales.whales_ecommerce.data.repositories.ProductRepository;
 import com.olawhales.whales_ecommerce.data.repositories.SellerRepository;
 import com.olawhales.whales_ecommerce.dto.request.goodsRequest.productRequest.*;
-import com.olawhales.whales_ecommerce.dto.response.goodsResponse.productResponse.CreateProductResponse;
-import com.olawhales.whales_ecommerce.dto.response.goodsResponse.productResponse.DeleteProductResponse;
-import com.olawhales.whales_ecommerce.dto.response.goodsResponse.productResponse.GetAllProductResponse;
-import com.olawhales.whales_ecommerce.dto.response.goodsResponse.productResponse.UpdateProductResponse;
+import com.olawhales.whales_ecommerce.dto.response.goodsResponse.productResponse.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Optional;
 
 
 @Service
@@ -38,8 +36,10 @@ public class ProductServiceImp implements ProductService{
         if (user.getUserRole() != UserRole.SELLER) {
             throw new IllegalArgumentException("You are not permitted to perform this action");
         }
+        Long sellerId = productRequest.getSellerId();
 
     Product product = new Product();
+        product.setSeller(user.getSeller());
     product.setProductName(productRequest.getProductName());
     product.setProductDescription(productRequest.getProductDescription());
     product.setProductQuantity(productRequest.getProductQuantity());
@@ -52,6 +52,7 @@ public class ProductServiceImp implements ProductService{
     response.setProductQuantity(product.getProductQuantity());
     response.setProductPrice(product.getProductPrice());
     response.setSellerId(user.getSeller().getId());
+    response.setProductId(product.getId());
         System.out.println("Response: " + response);
     return response;
 }
@@ -64,49 +65,128 @@ public class ProductServiceImp implements ProductService{
         }
 
         UserPrincipal principal = (UserPrincipal) authentication.getPrincipal();
-        Users user = principal.getUsers();
+        Users user = principal.getUsers(); // Get authenticated user (seller)
 
         Long productId = deleteProduct.getProductId();
-        if(productId == null){
+        if (productId == null) {
             throw new IllegalArgumentException("Product Id is null");
         }
 
-//        Long sellerId = deleteProduct.getSellerId();
-//        if(sellerId == null){
-//            throw new IllegalArgumentException("Seller Id is null");
-//        }
-
-//        Seller seller = sellerRepository.findById(sellerId).
-//                orElseThrow(()-> new IllegalArgumentException("Seller Id must not be null"));
-//         Get product from DB
         Product product = productRepository.findById(productId)
                 .orElseThrow(() -> new IllegalArgumentException("Product not found"));
-        if (!product.getSeller().getId().equals(user.getId())) {
-            throw new IllegalArgumentException("You can only delete your own products");
+        System.out.println("this is the product id " + product.getId());
+
+//        if (!product.getSeller().getId().equals(user.getId())) {
+            if (!product.getSeller().getId().equals(user.getSeller().getId())) {
+                System.out.println("This is the seller product id  " + product.getSeller().getId());
+                System.out.println("This is the seller ID of authenticated user: " + user.getSeller());
+                throw new IllegalArgumentException("You can only delete your own products");
         }
 
-        // Soft delete (instead of hard delete)
-//        product.setDeleted(true);
-//        product.setSeller(seller);
+        product.setDeleted(true);
+        productRepository.save(product); // ✅ Save update instead of deleting
 
-        productRepository.deleteById(productId);
+        // ✅ Return success response
         DeleteProductResponse response = new DeleteProductResponse();
-        response.setMessage("Product deleted successful");
+        response.setMessage("Product deleted successfully");
         return response;
-   }
+}
 
     @Override
     public UpdateProductResponse update(UpdateProductRequest updateProduct) {
-        return null;
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication == null || !authentication.isAuthenticated()) {
+            throw new IllegalArgumentException("User is not authenticated");
+        }
+        UserPrincipal principal = (UserPrincipal) authentication.getPrincipal();
+        Users user = principal.getUsers(); // Get authenticated user (seller// )
+
+        Long productId = updateProduct.getId();
+        if (productId == null) {
+            throw new IllegalArgumentException("Product Id is null");
+        }
+        Product product = productRepository.findById(productId)
+                .orElseThrow(() -> new IllegalArgumentException("Product not found"));
+        System.out.println("this is the product id " + product.getId());
+
+        if (!product.getSeller().getId().equals(user.getSeller().getId())) {
+            System.out.println("This is the seller product id  " + product.getSeller().getId());
+            System.out.println("This is the seller ID of authenticated user: " + user.getSeller());
+            throw new IllegalArgumentException("You can only update your own products");
+        }
+
+        product.setProductName(updateProduct.getProductName());
+        product.setProductDescription(updateProduct.getProductDescription());
+        product.setProductPrice(updateProduct.getProductPrice());
+        product.setProductQuantity(updateProduct.getProductQuantity());
+        productRepository.save(product);
+        UpdateProductResponse updateProductResponse = new UpdateProductResponse();
+        updateProductResponse.setProductName(updateProduct.getProductName());
+        updateProductResponse.setProductDescription(updateProduct.getProductDescription());
+        updateProductResponse.setProductPrice(updateProduct.getProductPrice());
+        updateProductResponse.setProductQuantity(updateProduct.getProductQuantity());
+        updateProductResponse.setMessage("product updated successfully");
+
+        return updateProductResponse;
     }
 
     @Override
-    public GetAllProductResponse getAll(GetAllProductsRequest getAll) {
-        return null;
+    public List<GetProductResponse> getAll(GetAllProductsRequest getAll) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication == null || !authentication.isAuthenticated()) {
+            throw new IllegalArgumentException("User is not authenticated");
+        }
+        UserPrincipal principal = (UserPrincipal) authentication.getPrincipal();
+        Users user = principal.getUsers(); // Get authenticated user (seller// )
+        Long seller = getAll.getSellerId();
+
+        List<Product> products = productRepository.findAllBySellerId(seller) ;
+        if(products.isEmpty()) {
+            throw new IllegalArgumentException("No productsController found");
+        }
+        if (!user.getSeller().getId().equals(products.get(0).getSeller().getId())) {
+            System.out.println("This is the seller ID of authenticated user: " + user.getSeller());
+            throw new IllegalArgumentException("You can only update your own products");
+        }
+
+        return products.stream()
+                .map(product -> {
+                    GetProductResponse productResponse = new GetProductResponse();
+                    productResponse.setProductName(product.getProductName());
+                    productResponse.setProductDescription(product.getProductDescription());
+                    productResponse.setProductPrice(product.getProductPrice());
+                    productResponse.setProductQuantity(product.getProductQuantity());
+
+                    return getProductResponse(productResponse, product);
+                })
+                .toList();
     }
 
     @Override
-    public GetAllProductResponse getSingle(GetSingleSellerRequest getSingle) {
-        return null;
+    public GetProductResponse getSingleProduct(GetSingleSellerRequest getSingleProduct) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication == null || !authentication.isAuthenticated()) {
+            throw new IllegalArgumentException("User is not authenticated");
+        }
+        UserPrincipal principal = (UserPrincipal) authentication.getPrincipal();
+        Users user = principal.getUsers();
+
+        Long productId = getSingleProduct.getProductId();
+        Optional<Product> product = productRepository.findById(productId);
+        if (!user.getSeller().getId().equals(product.get().getSeller().getId())){
+            throw new IllegalArgumentException("You can only find your own products");
+        }
+        GetProductResponse response = new GetProductResponse();
+        Product products = product.get();
+        return getProductResponse(response , products);
+    }
+
+    private GetProductResponse getProductResponse(GetProductResponse productResponse, Product product) {
+        productResponse.setProductName(product.getProductName());
+        productResponse.setProductDescription(product.getProductDescription());
+        productResponse.setProductPrice(product.getProductPrice());
+        productResponse.setProductQuantity(product.getProductQuantity());
+        productResponse.setMessage("Product found");
+        return productResponse;
     }
 }
