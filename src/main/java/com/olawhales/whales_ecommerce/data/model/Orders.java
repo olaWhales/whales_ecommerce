@@ -18,5 +18,5 @@ public class Orders {
     private Double totalAmount;
 
     @OneToMany (mappedBy = "orders", cascade = CascadeType.ALL , orphanRemoval = true)
-    private List<Cart> carts = new ArrayList<>();
+    private List<OrderItem> orderItems = new ArrayList<>();
 }

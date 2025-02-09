@@ -3,38 +3,19 @@ package com.olawhales.whales_ecommerce.data.model;
 import jakarta.persistence.*;
 import lombok.Data;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-@Data
 @Entity
+@Data
 public class Cart {
     @Id
-    @GeneratedValue (strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private LocalDate deliveryDate ;
-    private LocalDateTime orderTime ;
-//    @NotNull
-//    @Size(min = 2, max = 50)
-    private Integer quantity ;
-    private Double price ;
 
-    @Enumerated(EnumType.STRING)
-    private Status status;
+    @OneToOne
+    private Users users;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    private Address address ;
+    @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<CartItem> cartItem = new ArrayList<>();
 
-    @ManyToOne
-    @JoinColumn (name = "orders_id")
-    private Orders orders ;
-
-    @ManyToMany
-    @JoinTable(
-            name = "order_item_product",
-            joinColumns = @JoinColumn (name = "order_item_id"),
-            inverseJoinColumns = @JoinColumn(name = "product_id")
-    )
-    private  List <Product> products  = new ArrayList<>();
 }
