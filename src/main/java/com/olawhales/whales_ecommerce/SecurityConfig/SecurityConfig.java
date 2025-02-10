@@ -39,6 +39,7 @@ public class SecurityConfig extends WebSecurityConfiguration {
                         .requestMatchers("/api/product/update/").hasAuthority("SELLER")
                         .requestMatchers("/api/product/findAll_product/").hasAuthority("SELLER")
                         .requestMatchers("/api/product/findSingle/").hasAuthority("SELLER")
+                        .requestMatchers("/cart/addToCart/").hasAuthority("BUYER")
                         .anyRequest().authenticated())
                 .httpBasic(Customizer.withDefaults())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

@@ -6,5 +6,9 @@ import com.olawhales.whales_ecommerce.dto.response.goodsResponse.cartResponse.Ca
 public interface CartService {
 //    CartItemResponse response(CreateCartItemRequest createCartItemRequest);
 
+//    CartItemResponse addToCart(CreateCartItemRequest createCartItemRequest);
+
     CartItemResponse addToCart(CreateCartItemRequest createCartItemRequest);
+
+    CartItemResponse addToCart(CreateCartItemRequest createCartItemRequest, String username);
 }
