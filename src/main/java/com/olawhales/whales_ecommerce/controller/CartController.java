@@ -5,10 +5,7 @@ import com.olawhales.whales_ecommerce.services.CartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/cart/")
@@ -17,11 +14,23 @@ public class CartController {
     private CartService cartService;
 
     @PostMapping("/addToCart/")
-    public ResponseEntity<?>add(@RequestBody CreateCartItemRequest createCartItemRequest) {
+    public ResponseEntity<?>add(@RequestBody CreateCartItemRequest createCartItemRequest ) {
+        String username = createCartItemRequest.getUsername();
         try{
-            return new ResponseEntity<>(cartService.addToCart(createCartItemRequest), HttpStatus.OK);
+            return new ResponseEntity<>(cartService.addToCart(createCartItemRequest , username), HttpStatus.OK);
         }catch (Exception exception){
             return new ResponseEntity<>(exception.getMessage() , HttpStatus.BAD_REQUEST);
         }
     }
+
+//    @ResponseBody
+//    @PostMapping("/addToCart/")
+//    public CreateCartItemResponse addToCart(@RequestBody CreateCartItemRequest createCartItemRequest,
+//                                      @AuthenticationPrincipal UserDetails userDetails) {
+//        String username = userDetails.getUsername();
+//        return cartService.addToCart(createCartItemRequest, username);
+//    }
+
+
 }
+

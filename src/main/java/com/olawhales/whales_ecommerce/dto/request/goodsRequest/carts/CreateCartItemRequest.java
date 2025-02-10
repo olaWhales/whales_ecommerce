@@ -12,6 +12,7 @@ public class CreateCartItemRequest {
 //    private Long userId;
 
 //    private Long cartId; // Reference to the Cart
+    private String username ;
     private Long productId; // Linked product details
     private Integer quantity; // Quantity of product in cart
 //    private BigDecimal totalPrice; // Price * quantity

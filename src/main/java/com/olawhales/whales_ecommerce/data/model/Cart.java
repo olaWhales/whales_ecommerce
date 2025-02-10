@@ -1,5 +1,6 @@
 package com.olawhales.whales_ecommerce.data.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -16,6 +17,7 @@ public class Cart {
     private Users users;
 
     @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL, orphanRemoval = true)
+//    @JsonManagedReference
     private List<CartItem> cartItem = new ArrayList<>();
 
 }
