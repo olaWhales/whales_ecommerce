@@ -20,21 +20,24 @@ public class OrderItem {
     private Integer quantity ;
     private Double price ;
 
-    @Enumerated(EnumType.STRING)
-    private Status status;
+//    @Enumerated(EnumType.STRING)
+//    private Status status;
 
     @OneToOne(cascade = CascadeType.ALL)
     private Address address ;
+    @ManyToOne
+    @JoinColumn(name = "order_id", nullable = false)  // ✅ Ensure it references Order
+    private Orders orders;
 
     @ManyToOne
-    @JoinColumn (name = "orders_id")
-    private Orders orders ;
+    @JoinColumn(name = "product_id", nullable = false)
+    private Product product;
 
-    @ManyToMany
-    @JoinTable(
-            name = "order_item_product",
-            joinColumns = @JoinColumn (name = "order_item_id"),
-            inverseJoinColumns = @JoinColumn(name = "product_id")
-    )
-    private  List <Product> products  = new ArrayList<>();
+//    @ManyToMany
+//    @JoinTable(
+//            name = "order_item_product",
+//            joinColumns = @JoinColumn (name = "order_item_id"),
+//            inverseJoinColumns = @JoinColumn(name = "product_id")
+//    )
+//    private  List <Product> products  = new ArrayList<>();
 }

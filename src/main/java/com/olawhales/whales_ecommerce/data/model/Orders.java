@@ -17,6 +17,13 @@ public class Orders {
     private LocalDateTime orderDate;
     private Double totalAmount;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false) // Foreign key in "Order" table
+    private Users users;
+
+    @Enumerated(EnumType.STRING)
+    private Status status;
+
     @OneToMany (mappedBy = "orders", cascade = CascadeType.ALL , orphanRemoval = true)
     private List<OrderItem> orderItems = new ArrayList<>();
 }

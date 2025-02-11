@@ -3,6 +3,8 @@ package com.olawhales.whales_ecommerce.data.model;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -34,6 +36,8 @@ public class Users {
 
     @Column(nullable = false)
     private LocalDateTime dateCreated;
+    @OneToMany
+    private List<Orders> orders = new ArrayList<>();
 
     public Long getId() {
         return id;

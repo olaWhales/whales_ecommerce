@@ -1,6 +1,9 @@
 package com.olawhales.whales_ecommerce.controller;
 
+import com.olawhales.whales_ecommerce.dto.request.goodsRequest.carts.ClearCartItemRequest;
 import com.olawhales.whales_ecommerce.dto.request.goodsRequest.carts.CreateCartItemRequest;
+import com.olawhales.whales_ecommerce.dto.request.goodsRequest.carts.RemoveCartItemRequest;
+import com.olawhales.whales_ecommerce.dto.response.goodsResponse.cartResponse.RemoveCartItemResponse;
 import com.olawhales.whales_ecommerce.services.CartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,13 +26,24 @@ public class CartController {
         }
     }
 
-//    @ResponseBody
-//    @PostMapping("/addToCart/")
-//    public CreateCartItemResponse addToCart(@RequestBody CreateCartItemRequest createCartItemRequest,
-//                                      @AuthenticationPrincipal UserDetails userDetails) {
-//        String username = userDetails.getUsername();
-//        return cartService.addToCart(createCartItemRequest, username);
-//    }
+    @ResponseBody
+    @DeleteMapping("/removeFromCart/")
+    public ResponseEntity<?>addToCart(@RequestBody RemoveCartItemRequest removeCartItemRequest) {
+        try{
+            return new ResponseEntity<>(cartService.removeFromCart(removeCartItemRequest), HttpStatus.OK);
+        }catch (Exception exception){
+            return new ResponseEntity<>(exception.getMessage() , HttpStatus.BAD_REQUEST);
+        }
+    }
+    @ResponseBody
+    @DeleteMapping("/deleteCart/")
+    public ResponseEntity<?>removeFromCart(@RequestBody ClearCartItemRequest clearCartItemRequest) {
+        try{
+            return new ResponseEntity<>(cartService.clearCart(clearCartItemRequest), HttpStatus.OK);
+        }catch (Exception exception){
+            return new ResponseEntity<>(exception.getMessage() , HttpStatus.BAD_REQUEST);
+        }
+    }
 
 
 }

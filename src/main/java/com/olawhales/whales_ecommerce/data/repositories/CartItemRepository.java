@@ -1,6 +1,7 @@
 package com.olawhales.whales_ecommerce.data.repositories;
 
 import com.olawhales.whales_ecommerce.data.model.CartItem;
+import com.olawhales.whales_ecommerce.data.model.Users;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
