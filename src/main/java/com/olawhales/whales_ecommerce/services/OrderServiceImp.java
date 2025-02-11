@@ -10,6 +10,7 @@ import com.olawhales.whales_ecommerce.dto.response.goodsResponse.cartResponse.Ch
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -43,13 +44,17 @@ public class OrderServiceImp implements OrderService {
         orders.setStatus(Status.PENDING);
         orderRepository.save(orders);
         List<OrderItem> orderItems = new ArrayList<>();
+
         for (CartItem cartItem : cart.getCartItem()) {
             OrderItem orderItem = new OrderItem();
             orderItem.setOrders(orders);
             orderItem.setProduct(cartItem.getProduct());
             orderItem.setQuantity(cartItem.getQuantity());
+            orderItem.setDeliveryDate(LocalDate.now().plusDays(5));
             orderItems.add(orderItem);
         }
+        
+        System.out.println("This is order Item " +orderItems);
         orderItemRepository.saveAll(orderItems);
         CheckoutCartResponse response = new CheckoutCartResponse();
         response.setMessage("Order created successfully! Thank you for shopping");

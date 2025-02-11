@@ -15,13 +15,9 @@ public class OrderItem {
     private Long id;
     private LocalDate deliveryDate ;
     private LocalDateTime orderTime ;
-//    @NotNull
-//    @Size(min = 2, max = 50)
+
     private Integer quantity ;
     private Double price ;
-
-//    @Enumerated(EnumType.STRING)
-//    private Status status;
 
     @OneToOne(cascade = CascadeType.ALL)
     private Address address ;
@@ -33,11 +29,4 @@ public class OrderItem {
     @JoinColumn(name = "product_id", nullable = false)
     private Product product;
 
-//    @ManyToMany
-//    @JoinTable(
-//            name = "order_item_product",
-//            joinColumns = @JoinColumn (name = "order_item_id"),
-//            inverseJoinColumns = @JoinColumn(name = "product_id")
-//    )
-//    private  List <Product> products  = new ArrayList<>();
 }
