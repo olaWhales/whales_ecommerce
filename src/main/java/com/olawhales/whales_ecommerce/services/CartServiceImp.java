@@ -5,21 +5,15 @@ import com.olawhales.whales_ecommerce.data.repositories.CartItemRepository;
 import com.olawhales.whales_ecommerce.data.repositories.CartRepository;
 import com.olawhales.whales_ecommerce.data.repositories.ProductRepository;
 import com.olawhales.whales_ecommerce.data.repositories.UserRepository;
-import com.olawhales.whales_ecommerce.dto.request.goodsRequest.carts.CheckoutCartRequest;
 import com.olawhales.whales_ecommerce.dto.request.goodsRequest.carts.ClearCartItemRequest;
 import com.olawhales.whales_ecommerce.dto.request.goodsRequest.carts.CreateCartItemRequest;
 import com.olawhales.whales_ecommerce.dto.request.goodsRequest.carts.RemoveCartItemRequest;
-import com.olawhales.whales_ecommerce.dto.response.goodsResponse.cartResponse.CheckoutCartResponse;
 import com.olawhales.whales_ecommerce.dto.response.goodsResponse.cartResponse.ClearCartItemResponse;
 import com.olawhales.whales_ecommerce.dto.response.goodsResponse.cartResponse.CreateCartItemResponse;
 import com.olawhales.whales_ecommerce.dto.response.goodsResponse.cartResponse.RemoveCartItemResponse;
-import jakarta.persistence.criteria.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
-import java.util.IllegalFormatWidthException;
-import java.util.Optional;
 
 @Service
 public class CartServiceImp implements CartService {
@@ -38,12 +32,9 @@ public class CartServiceImp implements CartService {
     public CreateCartItemResponse addToCart(CreateCartItemRequest createCartItemRequest, String username) {
         Users user = userRepository.findByUserName(username)
                 .orElseThrow(()-> new IllegalArgumentException("User not found"));
-        System.out.println("This is user " + user);
         Long productId = createCartItemRequest.getProductId();
-        System.out.println("This is product id" + productId);
         Product product = productRepository.findById(productId)
                 .orElseThrow(() -> new RuntimeException("Product not found"));
-        System.out.println("This is product " + product);
         // Find or Create Cart
         Cart cart = cartRepository.findByUsers(user);
         if (cart == null) {
@@ -58,13 +49,13 @@ public class CartServiceImp implements CartService {
         cartItem.setQuantity(createCartItemRequest.getQuantity());
         cartItem.setCart(cart);
         cartItemRepository.save(cartItem);
-        System.out.println("This is all cartItem " + cartItem);
 
         // Create Response
         CreateCartItemResponse createCartItemResponse = new CreateCartItemResponse();
         createCartItemResponse.setProductId(cartItem.getProduct().getId());
         createCartItemResponse.setQuantity(cartItem.getQuantity());
-        System.out.println("This is cart Item " + createCartItemResponse);
+//        createCartItemResponse.setPrice(product.getProductPrice() * cartItem.getQuantity());
+        createCartItemResponse.setPrice(calculateCartTotal(cart));
         return createCartItemResponse;
     }
 
@@ -97,7 +88,11 @@ public class CartServiceImp implements CartService {
         return response;
     }
 
-
+    public double calculateCartTotal(Cart cart) {
+        return cart.getCartItem().stream()
+                .mapToDouble(item -> item.getQuantity() * item.getProduct().getProductPrice())
+                .sum();
+    }
 
 }
 

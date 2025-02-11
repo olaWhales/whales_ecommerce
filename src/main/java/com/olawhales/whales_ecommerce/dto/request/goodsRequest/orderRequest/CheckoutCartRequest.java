@@ -1,4 +1,4 @@
-package com.olawhales.whales_ecommerce.dto.request.goodsRequest.carts;
+package com.olawhales.whales_ecommerce.dto.request.goodsRequest.orderRequest;
 
 import lombok.Data;
 
