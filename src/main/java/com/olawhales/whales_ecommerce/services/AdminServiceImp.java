@@ -88,11 +88,6 @@ public class AdminServiceImp implements AdminService {
         }
 
         Seller seller = sellerOptional.get();
-        System.out.println("this is seller found " + seller.getUser().getUserName());
-        System.out.println("DB Username: " + seller.getUser().getUserName().trim());
-        System.out.println("Authenticated Username: " + username.trim());
-        System.out.println("Comparison Result: " + seller.getUser().getUserName().trim().equalsIgnoreCase(username.trim()));
-
         // Check if the authenticated user is ADMIN
         boolean isAdmin = principal.getAuthorities().stream()
                 .anyMatch(auth -> auth.getAuthority().equals("ADMIN"));
