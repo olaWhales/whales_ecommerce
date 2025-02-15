@@ -14,12 +14,12 @@ import org.springframework.web.bind.annotation.*;
 public class AdminController {
 
     @Autowired
-    private AdminServiceImp adminService;
+    private AdminServiceImp adminServiceImp;
 
     @PostMapping("/registration/")
     public ResponseEntity <?> registration(@RequestBody AdminRegRequest adminRegRequest){
         try{
-            return new ResponseEntity<>(adminService.adminRegister(adminRegRequest) , HttpStatus.OK);
+            return new ResponseEntity<>(adminServiceImp .adminRegister(adminRegRequest) , HttpStatus.OK);
         }catch (Exception exception){
             return new ResponseEntity<>(exception.getMessage(), HttpStatus.BAD_REQUEST);
         }
@@ -28,7 +28,7 @@ public class AdminController {
     @GetMapping("/view_single_seller_products")
     public ResponseEntity<?> viewSellerProduct(@RequestBody ViewAllProductRequest viewAllProductRequest) {
         try{
-            return new ResponseEntity<>(adminService.viewAllProduct(viewAllProductRequest), HttpStatus.OK);
+            return new ResponseEntity<>(adminServiceImp.viewAllProduct(viewAllProductRequest), HttpStatus.OK);
         }catch (Exception exception){
             return new ResponseEntity<>(exception.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }

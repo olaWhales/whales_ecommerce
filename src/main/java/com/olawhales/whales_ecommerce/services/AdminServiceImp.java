@@ -6,8 +6,10 @@ import com.olawhales.whales_ecommerce.data.repositories.ProductRepository;
 import com.olawhales.whales_ecommerce.data.repositories.SellerRepository;
 import com.olawhales.whales_ecommerce.data.repositories.UserRepository;
 import com.olawhales.whales_ecommerce.dto.request.adminRequest.AdminRegRequest;
+import com.olawhales.whales_ecommerce.dto.request.adminRequest.DeleteSellerProductRequest;
 import com.olawhales.whales_ecommerce.dto.request.adminRequest.ViewAllProductRequest;
 import com.olawhales.whales_ecommerce.dto.response.adminResponse.AdminRegResponse;
+import com.olawhales.whales_ecommerce.dto.response.adminResponse.DeleteSellerProductResponse;
 import com.olawhales.whales_ecommerce.dto.response.adminResponse.ViewAllProductsResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -110,8 +112,46 @@ public class AdminServiceImp implements AdminService {
     }
 
     @Override
-    public ViewAllProductsResponse viewAllProduct() {
-        return null;
+    public DeleteSellerProductResponse deleteSellerProduct(DeleteSellerProductRequest deleteSellerProductRequest) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication == null || !authentication.isAuthenticated()) {
+            throw new SecurityException("Invalid administrative details");
+        }
+        UserPrincipal principal = (UserPrincipal) authentication.getPrincipal();
+        if (principal == null) {
+            throw new SecurityException("Invalid administrative details");
+        }
+
+        String username = principal.getUsername();
+        if (username == null) {
+            throw new SecurityException("Username not found");
+        }
+
+        // Get Seller's ID from Request
+        Long sellerId = deleteSellerProductRequest.getSellerId();
+        if (sellerId == null) {
+            throw new SecurityException("Seller id must not be null");
+        }
+
+        // Verify Seller Ownership
+        Optional<Seller> sellerOptional = sellerRepository.findById(sellerId);
+        if (sellerOptional.isEmpty()) {
+            throw new IllegalArgumentException("Seller not found");
+        }
+
+        Seller seller = sellerOptional.get();
+        // Check if the authenticated user is ADMIN
+        boolean isAdmin = principal.getAuthorities().stream()
+                .anyMatch(auth -> auth.getAuthority().equals("ADMIN"));
+        if (!isAdmin) {
+            if (!seller.getUser().getUserName().trim().equalsIgnoreCase(username.trim())) {
+                throw new SecurityException("You are not authorized to view this seller's products");
+            }
+        }
+//        Product product = productRepository.findBySeller()
+//        if (seller.equals()) {
+//        }
+     return null   ;
     }
 
     private ViewAllProductsResponse getProductResponse(Product product) {
@@ -122,6 +162,4 @@ public class AdminServiceImp implements AdminService {
         productResponse.setProductQuantity(product.getProductQuantity());
         return productResponse;
     }
-
-
 }
