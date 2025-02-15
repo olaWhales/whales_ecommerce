@@ -6,9 +6,6 @@ import org.springframework.stereotype.Service;
 
 @Service
 public interface OrderService {
-//    OrdersResponse createOrder(OrderCreateRequest orderCreateRequest );
-//    OrderUpdateResponse updateOrder(OrderUpdateRequest orderUpdateRequest);
-//    OrdersResponse deleteOrder(Long orderId);
     CheckoutCartResponse checkoutCart(CheckoutCartRequest checkoutCartRequest);
 
 }

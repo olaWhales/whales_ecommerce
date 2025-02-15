@@ -2,7 +2,7 @@ package com.olawhales.whales_ecommerce.data.model;
 
 
 public enum UserRole {
-//    ADMIN,
+    ADMIN,
     SELLER,
 //    DRIVER,
     BUYER

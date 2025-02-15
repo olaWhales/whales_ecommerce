@@ -1,4 +1,4 @@
-package com.olawhales.whales_ecommerce.services;
+package com.olawhales.whales_ecommerce.SecurityConfig;
 
 import com.olawhales.whales_ecommerce.data.model.UserPrincipal;
 import com.olawhales.whales_ecommerce.data.model.Users;

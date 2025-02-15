@@ -34,6 +34,7 @@ public class SecurityConfig extends WebSecurityConfiguration {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(requests -> requests
                 .requestMatchers("/api/register/user/" ,"/api/register/login").permitAll()
+                        .requestMatchers("/admin/registration/").permitAll()
                         .requestMatchers("/Product/create/").hasAuthority("SELLER")
                         .requestMatchers("/product/delete/").hasAuthority("SELLER")
                         .requestMatchers("/api/product/update/").hasAuthority("SELLER")
@@ -43,6 +44,7 @@ public class SecurityConfig extends WebSecurityConfiguration {
                         .requestMatchers("/cart/removeFromCart/").permitAll()
                         .requestMatchers("/cart/deleteCart/").hasAuthority("BUYER")
                         .requestMatchers("/order/order/").hasAuthority("BUYER")
+                        .requestMatchers("/admin/view_single_seller_products").hasAuthority("ADMIN")
                         .anyRequest().authenticated())
                 .httpBasic(Customizer.withDefaults())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

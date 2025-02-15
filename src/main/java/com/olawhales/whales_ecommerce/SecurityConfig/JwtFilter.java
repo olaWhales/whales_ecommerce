@@ -1,9 +1,7 @@
 package com.olawhales.whales_ecommerce.SecurityConfig;
 
-import com.olawhales.whales_ecommerce.services.MyUserDetailsService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -15,8 +15,5 @@ public class Address {
     private String city ;
     private String houseNumber ;
 
-    @Enumerated
-    private UserRole userRole;
-
 }
 

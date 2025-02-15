@@ -6,5 +6,13 @@ import java.util.List;
 
 @Data
 public class ViewAllProductsResponse {
-    private List<Product> products;
+    private Long sellerUsername;
+    private String productName;
+    private String productDescription;
+    private Double productPrice;
+    private Integer productQuantity;
+    private String message;
+//    private List<Product> products;
+
+
 }

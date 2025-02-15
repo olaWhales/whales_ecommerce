@@ -36,42 +36,6 @@ public class OrderServiceImp implements OrderService {
         if(cart == null) {
             throw new IllegalArgumentException("Cart not found");
         }
-//        Orders orders = new Orders();
-//        orders.setUsers(user.get());
-//        orders.setOrderDate(LocalDateTime.now());
-//        orders.setOrderId(orders.getOrderId());
-//        orders.setStatus(Status.PENDING);
-//        orderRepository.save(orders);
-//        List<OrderItem> orderItems = new ArrayList<>();
-//
-//        for (CartItem cartItem : cart.getCartItem()) {
-//            Product product = cartItem.getProduct();
-//            OrderItem orderItem = new OrderItem();
-//            orderItem.setOrders(orders);
-//            orderItem.setDeliveryDate(LocalDate.now().plusDays(5));
-//            orderItem.setProduct(cartItem.getProduct());
-//            orderItem.setQuantity(cartItem.getQuantity());
-////            orderItem.setPrice(cartItem.getQuantity() * product.getProductPrice());
-//            orderItem.setPrice(calculateOrderTotal(orders));
-//            orderItems.add(orderItem);
-//
-//
-//        }
-//
-//        System.out.println("This is order Item " +orderItems);
-//        orderItemRepository.saveAll(orderItems);
-//        CheckoutCartResponse response = new CheckoutCartResponse();
-////        response.setTotalPrice(orderItem);
-//        response.setMessage("Order created successfully! Thank you for shopping");
-//        return null;
-//    }
-//
-//
-//    public double calculateOrderTotal(Orders order) {
-//        return order.getOrderItems().stream()
-//                .mapToDouble(item -> item.getQuantity() * item.getProduct().getProductPrice())
-//                .sum();
-
             // Create new Order
             Orders orders = new Orders();
             orders.setUsers(user.get());
@@ -109,6 +73,7 @@ public class OrderServiceImp implements OrderService {
                 Product product = cartItem.getProduct();
                 OrderItem orderItem = new OrderItem();
                 orderItem.setOrders(orders);
+                orderItem.setOrderTime(LocalDateTime.now());
                 orderItem.setDeliveryDate(LocalDate.now().plusDays(5));
                 orderItem.setProduct(product);
                 orderItem.setQuantity(cartItem.getQuantity());

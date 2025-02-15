@@ -5,5 +5,6 @@ import lombok.Data;
 
 @Data
 public class ViewAllProductRequest {
-    private Long sellerId;
+//    private Long sellerUsername;
+    private Long sellerId ;
 }

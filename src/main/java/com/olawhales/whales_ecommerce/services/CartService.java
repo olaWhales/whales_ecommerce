@@ -8,12 +8,6 @@ import com.olawhales.whales_ecommerce.dto.response.goodsResponse.cartResponse.Cr
 import com.olawhales.whales_ecommerce.dto.response.goodsResponse.cartResponse.RemoveCartItemResponse;
 
 public interface CartService {
-//    CreateCartItemResponse response(CreateCartItemRequest createCartItemRequest);
-
-//    CreateCartItemResponse addToCart(CreateCartItemRequest createCartItemRequest);
-
-//    CreateCartItemResponse addToCart(CreateCartItemRequest createCartItemRequest);
-
     CreateCartItemResponse addToCart(CreateCartItemRequest createCartItemRequest, String username);
     RemoveCartItemResponse removeFromCart(RemoveCartItemRequest removeCartItemRequest);
     ClearCartItemResponse clearCart(ClearCartItemRequest clearCartItemRequest);

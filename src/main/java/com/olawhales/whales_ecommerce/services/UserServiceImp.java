@@ -10,10 +10,7 @@ import com.olawhales.whales_ecommerce.data.repositories.BuyerRepository;
 import com.olawhales.whales_ecommerce.data.repositories.SellerRepository;
 import com.olawhales.whales_ecommerce.data.repositories.UserRepository;
 import com.olawhales.whales_ecommerce.dto.request.usersRequest.LoginRequest;
-import com.olawhales.whales_ecommerce.dto.request.usersRequest.SellerRequest;
 import com.olawhales.whales_ecommerce.dto.request.usersRequest.SignUpRequest;
-import com.olawhales.whales_ecommerce.dto.response.usersResponse.BuyerResponse;
-import com.olawhales.whales_ecommerce.dto.response.usersResponse.SellerResponse;
 import com.olawhales.whales_ecommerce.dto.response.usersResponse.UsersResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -61,7 +58,11 @@ public class UserServiceImp implements UserService {
             seller.setBusinessAddress(signUpRequest.getBusinessAddress());
             seller.setUser(user);
             sellerRepository.save(seller);
-        } else {
+        }
+//        if(signUpRequest.getUserRole() == UserRole.ADMIN){
+//
+//        }
+        else {
             Buyer buyer = new Buyer();
             buyer.setUser(user);
             buyerRepository.save(buyer);

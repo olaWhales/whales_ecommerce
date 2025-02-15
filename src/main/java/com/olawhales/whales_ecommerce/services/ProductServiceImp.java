@@ -155,7 +155,6 @@ public class ProductServiceImp implements ProductService{
                     productResponse.setProductDescription(product.getProductDescription());
                     productResponse.setProductPrice(product.getProductPrice());
                     productResponse.setProductQuantity(product.getProductQuantity());
-
                     return getProductResponse(productResponse, product);
                 })
                 .toList();
