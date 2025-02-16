@@ -148,9 +148,7 @@ public class AdminServiceImp implements AdminService {
                 throw new SecurityException("You are not authorized to view this seller's products");
             }
         }
-//        Product product = productRepository.findBySeller()
-//        if (seller.equals()) {
-//        }
+
      return null   ;
     }
 

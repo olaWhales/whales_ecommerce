@@ -59,9 +59,6 @@ public class UserServiceImp implements UserService {
             seller.setUser(user);
             sellerRepository.save(seller);
         }
-//        if(signUpRequest.getUserRole() == UserRole.ADMIN){
-//
-//        }
         else {
             Buyer buyer = new Buyer();
             buyer.setUser(user);

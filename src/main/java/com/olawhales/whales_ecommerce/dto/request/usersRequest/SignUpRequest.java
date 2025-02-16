@@ -13,7 +13,7 @@ public class SignUpRequest {
     private String email ;
     private String password ;
     private String contact ;
-    private LocalDate dateCreated ;
+//    private LocalDate dateCreated ;
     private UserRole userRole ;
 
     private String businessAddress ;
@@ -35,13 +35,13 @@ public class SignUpRequest {
         this.businessAddress = businessAddress;
     }
 
-    public LocalDate getDateCreated() {
-        return dateCreated;
-    }
-
-    public void setDateCreated(LocalDate dateCreated) {
-        this.dateCreated = dateCreated;
-    }
+//    public LocalDate getDateCreated() {
+//        return dateCreated;
+//    }
+//
+//    public void setDateCreated(LocalDate dateCreated) {
+//        this.dateCreated = dateCreated;
+//    }
 
     public UserRole getUserRole() {
         return userRole;
