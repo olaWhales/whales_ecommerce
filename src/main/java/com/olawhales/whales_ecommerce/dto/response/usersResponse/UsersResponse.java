@@ -4,6 +4,8 @@ import lombok.Data;
 
 @Data
 public class UsersResponse {
+    private String token ;
+    private String userRole;
     private String message ;
 
     public String getMessage() {

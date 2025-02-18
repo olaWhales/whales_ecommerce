@@ -30,38 +30,12 @@ public class SecurityConfig extends WebSecurityConfiguration {
     @Autowired
     private JwtFilter jwtFilter ;
 
-//    @Bean
-//    public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity, JwtFilter jwtFilter)throws Exception{
-//        httpSecurity
-//                .csrf(AbstractHttpConfigurer::disable)
-//                .authorizeHttpRequests(requests -> requests
-//                .requestMatchers("/api/register/user/" ,"/api/register/login").permitAll()
-//                        .requestMatchers("/admin/registration/").permitAll()
-//                        .requestMatchers("/api/product/create/").hasAuthority("SELLER")
-//                        .requestMatchers("/product/delete/").hasAuthority("SELLER")
-//                        .requestMatchers("/api/product/update/").hasAuthority("SELLER")
-//                        .requestMatchers("/api/product/findAll_product/").hasAuthority("SELLER")
-//                        .requestMatchers("/api/product/findSingle/").hasAuthority("SELLER")
-//                        .requestMatchers("/cart/addToCart/").permitAll()
-//                        .requestMatchers("/cart/removeFromCart/").permitAll()
-//                        .requestMatchers("/cart/deleteCart/").hasAuthority("BUYER")
-//                        .requestMatchers("/order/order/").hasAuthority("BUYER")
-//                        .requestMatchers("/admin/view_single_seller_products").hasAuthority("ADMIN")
-//                        .anyRequest().authenticated())
-//                .httpBasic(Customizer.withDefaults())
-//                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-////                .addFilterBefore(corsFilter() , SessionManagementFilter.class);
-////                        .addFilterBefore(jwtFilter , SessionManagementFilter.class);
-//                        .addFilterBefore(jwtFilter , UsernamePasswordAuthenticationFilter.class);
-//        return httpSecurity.build();
-//    }
-
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity, JwtFilter jwtFilter) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity, JwtFilter jwtFilter)throws Exception{
         httpSecurity
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(requests -> requests
-                        .requestMatchers("/api/register/user/", "/api/register/login").permitAll()
+                .requestMatchers("/api/register/user/" ,"/api/register/login").permitAll()
                         .requestMatchers("/admin/registration/").permitAll()
                         .requestMatchers("/api/product/create/").hasAuthority("SELLER")
                         .requestMatchers("/api/product/delete/").hasAuthority("SELLER")
@@ -73,23 +47,22 @@ public class SecurityConfig extends WebSecurityConfiguration {
                         .requestMatchers("/cart/deleteCart/").hasAuthority("BUYER")
                         .requestMatchers("/order/order/").hasAuthority("BUYER")
                         .requestMatchers("/admin/view_single_seller_products").hasAuthority("ADMIN")
-                        .anyRequest().authenticated()
-                )
+                        .anyRequest().authenticated())
                 .httpBasic(Customizer.withDefaults())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
-                .cors(cors -> cors.configurationSource(request -> {
-                    var config = new CorsConfiguration();
-                    config.setAllowedOrigins(List.of("http://localhost:5173")); // Frontend URL
-                    config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
-                    config.setAllowedHeaders(List.of("Authorization", "Content-Type"));
-                    config.setAllowCredentials(true);
-                    return config;
-                }));
-
+//                .addFilterBefore(corsFilter() , SessionManagementFilter.class);
+//                        .addFilterBefore(jwtFilter , SessionManagementFilter.class);
+                        .addFilterBefore(jwtFilter , UsernamePasswordAuthenticationFilter.class)
+                        .cors(cors -> cors.configurationSource(request -> {
+            var config = new CorsConfiguration();
+            config.setAllowedOrigins(List.of("http://localhost:5173")); // Frontend URL
+            config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+            config.setAllowedHeaders(List.of("Authorization", "Content-Type"));
+            config.setAllowCredentials(true);
+            return config;
+        }));
         return httpSecurity.build();
     }
-
 
     private CorsFilter corsFilter() {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();

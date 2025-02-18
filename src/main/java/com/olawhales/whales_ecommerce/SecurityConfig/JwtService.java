@@ -43,7 +43,7 @@ public class JwtService {
                 .add(claims)
                 .subject(username)
                 .issuedAt(new Date(System.currentTimeMillis()))
-                .expiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 10 ))
+                .expiration(new Date(System.currentTimeMillis() + 2000 * 60 * 60 * 10 ))
                 .and()
                 .signWith(getkey()) // i generate a key here
                 .compact();
@@ -84,4 +84,10 @@ public class JwtService {
         return extractClaim(token , Claims::getExpiration);
     }
 
+    @Override
+    public String toString() {
+        return "JwtService{" +
+                "secreteKey='" + secreteKey + '\'' +
+                '}';
+    }
 }

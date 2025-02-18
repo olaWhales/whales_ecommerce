@@ -17,6 +17,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Map;
 
 @Service
 public class UserServiceImp implements UserService {
@@ -87,9 +89,11 @@ public class UserServiceImp implements UserService {
         String token = jwtService.GenerateToken(userName);
 
         UsersResponse response = new UsersResponse();
+        response.setToken(token);  // Add a new field for token in UsersResponse
+        response.setUserRole(user.getUserRole().toString()); // Add role to response
         response.setMessage("LOGIN SUCCESSFUL");
-        response.setMessage(token); // If using JWT
-        return response;
-    }
 
+        return response;
+
+    }
 }

@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/register")
-@CrossOrigin(origins = "*")
+//@CrossOrigin(origins = "*")
 public class RegistrationController{
 
     @Autowired
@@ -29,8 +29,7 @@ public class RegistrationController{
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
         try{
-            System.out.println("/n/n/n/Christopher Here!/n/n/n");
-            return new ResponseEntity<>(userService.login(loginRequest) , HttpStatus.CREATED);
+            return new ResponseEntity<>(userService.login(loginRequest) , HttpStatus.OK);
         }catch (Exception exception){
             return new ResponseEntity<>(exception.getMessage() , HttpStatus.BAD_REQUEST);
         }

@@ -35,15 +35,15 @@ public class JwtFilter extends OncePerRequestFilter {
         if(userName != null && SecurityContextHolder.getContext().getAuthentication() == null){
             MyUserDetailsService userDetailsService = context.getBean(MyUserDetailsService.class);
             UserDetails userDetails = userDetailsService.loadUserByUsername(userName);
-            System.out.println("This is user details " + userDetails.getUsername());
-//            UserDetails userDetails = context.getBean(MyUserDetailsService.class).loadUserByUsername(userName);
+//            System.out.println("This is user details " + userDetails.getUsername());
+//            UserDetails userDetails = context.getBean(MyUserDetailsService.class).loyadUserByUsername(userName);
             if(jwtService.validateToken(token, userDetails)) { // we create  Method validate inside jwtService class
-                System.out.println("Token validated");
+//                System.out.println("Token validated");
 
                 UsernamePasswordAuthenticationToken authToken =
                         new UsernamePasswordAuthenticationToken(userDetails , null , userDetails.getAuthorities());
                 authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));// this request here is the httpServet above
-                System.out.println(authToken   + "this is authentication");
+//                System.out.println(authToken   + "this is authentication");
                 SecurityContextHolder.getContext().setAuthentication(authToken);
             }else{
                 System.out.println("Token not validated");
