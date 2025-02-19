@@ -3,6 +3,7 @@ package com.olawhales.whales_ecommerce.data.model;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.NonNull;
 
 @Entity
 @Data

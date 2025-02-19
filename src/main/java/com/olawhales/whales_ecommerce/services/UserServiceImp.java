@@ -94,6 +94,5 @@ public class UserServiceImp implements UserService {
         response.setMessage("LOGIN SUCCESSFUL");
 
         return response;
-
     }
 }
