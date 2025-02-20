@@ -51,7 +51,7 @@ public class SecurityConfig extends WebSecurityConfiguration {
                 .httpBasic(Customizer.withDefaults())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 //                .addFilterBefore(corsFilter() , SessionManagementFilter.class);
-//                        .addFilterBefore(jwtFilter , SessionManagementFilter.class);
+//                        .addFilterBefore(jwtFilter , Sess ionManagementFilter.class);
                         .addFilterBefore(jwtFilter , UsernamePasswordAuthenticationFilter.class)
                         .cors(cors -> cors.configurationSource(request -> {
             var config = new CorsConfiguration();

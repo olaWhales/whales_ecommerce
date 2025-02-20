@@ -36,7 +36,7 @@ public class ProductController {
         }
     }
 
-    @GetMapping("/update/")
+    @PutMapping("/update/")
     public ResponseEntity<?>updateProduct(@RequestBody UpdateProductRequest updateProductRequest) {
         try{
             return new ResponseEntity<>(productService.update(updateProductRequest), HttpStatus.OK);
@@ -53,13 +53,26 @@ public class ProductController {
             return new ResponseEntity<>(exception.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
-    @GetMapping("/findSingle/")
-    public ResponseEntity<?>gitSingleProduct(@RequestBody GetSingleSellerRequest getSingleSellerRequest){
-        try{
-            return new ResponseEntity<>(productService.getSingleProduct(getSingleSellerRequest), HttpStatus.OK);
-        }catch (Exception exception){
-            return new ResponseEntity<>(exception.getMessage(), HttpStatus.BAD_REQUEST);
-        }
+//    @PostMapping("/findSingle/")
+//    public ResponseEntity<?>gitSingleProduct(@RequestBody GetSingleSellerRequest getSingleSellerRequest){
+//        try{
+//            return new ResponseEntity<>(productService.getSingleProduct(getSingleSellerRequest), HttpStatus.OK);
+//        }catch (Exception exception){
+//            return new ResponseEntity<>(exception.getMessage(), HttpStatus.BAD_REQUEST);
+//        }
+//    }
+@PostMapping("/findSingle/")
+public ResponseEntity<?> getSingleProduct(@RequestBody GetSingleSellerRequest getSingleSellerRequest) {
+    System.out.println("Received request: Product ID = " + getSingleSellerRequest.getProductId() +
+            ", Seller ID = " + getSingleSellerRequest.getSellerId());
+
+    try {
+        return new ResponseEntity<>(productService.getSingleProduct(getSingleSellerRequest), HttpStatus.OK);
+    } catch (Exception exception) {
+        return new ResponseEntity<>(exception.getMessage(), HttpStatus.BAD_REQUEST);
     }
+}
+
+
 }
 

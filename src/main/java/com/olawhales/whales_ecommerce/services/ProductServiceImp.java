@@ -103,7 +103,14 @@ public class ProductServiceImp implements ProductService{
 
         Long productId = updateProduct.getId();
         if (productId == null) {
-            throw new IllegalArgumentException("Product Id is null");
+            throw new IllegalArgumentException("Product Id is empty");
+        }
+        Long sellerId = updateProduct.getSellerId();
+        if (sellerId == null) {
+            throw new IllegalArgumentException("Seller Id is missing in request");
+        }
+        if(user.getSeller() == null){
+            throw new IllegalArgumentException("You are not permitted to perform this action");
         }
         Product product = productRepository.findById(productId)
                 .orElseThrow(() -> new IllegalArgumentException("Product not found"));
@@ -114,7 +121,8 @@ public class ProductServiceImp implements ProductService{
             System.out.println("This is the seller ID of authenticated user: " + user.getSeller());
             throw new IllegalArgumentException("You can only update your own products");
         }
-
+//        product.setId(productId);
+//        product.setSeller(user.getSeller());
         product.setProductName(updateProduct.getProductName());
         product.setProductDescription(updateProduct.getProductDescription());
         product.setProductPrice(updateProduct.getProductPrice());
