@@ -15,4 +15,20 @@ public class UsersResponse {
     public void setMessage(String message) {
         this.message = message;
     }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
+    public String getUserRole() {
+        return userRole;
+    }
+
+    public void setUserRole(String userRole) {
+        this.userRole = userRole;
+    }
 }

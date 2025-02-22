@@ -1,8 +1,12 @@
 package com.olawhales.whales_ecommerce.dto.request.adminRequest;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+//@Setter
+//@Getter
+//@Data
 public class AdminRegRequest {
     private String username;
     private String password;

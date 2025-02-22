@@ -45,7 +45,7 @@ public class ProductController {
         }
     }
 
-    @GetMapping("/findAll_product/")
+    @PostMapping("/findAll_product/")
     public ResponseEntity<?>getAll(@RequestBody GetAllProductsRequest getAllProductsRequest){
         try{
             return new ResponseEntity<>(productService.getAll(getAllProductsRequest), HttpStatus.OK);

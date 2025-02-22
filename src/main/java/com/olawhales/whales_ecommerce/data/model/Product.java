@@ -71,12 +71,11 @@ public class Product {
         this.productQuantity = productQuantity;
     }
 
-//    public Long getSeller() {
-//        return seller
-//    }
-//
-//    public void setSeller(Long seller) {
-//        this.seller = seller;
-//    }
+    public Seller getSeller() {
+        return seller;
+    }
 
+    public void setSeller(Seller seller) {
+        this.seller = seller;
+    }
 }

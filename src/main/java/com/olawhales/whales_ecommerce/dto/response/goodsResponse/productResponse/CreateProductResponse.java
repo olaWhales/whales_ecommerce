@@ -11,13 +11,21 @@ public class CreateProductResponse {
     private Double productPrice;
     private Integer productQuantity;
 
-//    public Long getSellerId() {
-//        return sellerId;
-//    }
-//
-//    public void setSellerId(Long sellerId) {
-//        this.sellerId = sellerId;
-//    }
+    public Long getSellerId() {
+        return sellerId;
+    }
+
+    public void setSellerId(Long sellerId) {
+        this.sellerId = sellerId;
+    }
+
+    public Long getProductId() {
+        return productId;
+    }
+
+    public void setProductId(Long productId) {
+        this.productId = productId;
+    }
 
     public String getProductName() {
         return productName;

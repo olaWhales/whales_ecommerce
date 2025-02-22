@@ -9,11 +9,31 @@ import java.math.BigDecimal;
 
 @Data
 public class CreateCartItemRequest {
-//    private Long userId;
-
-//    private Long cartId; // Reference to the Cart
     private String username ;
     private Long productId; // Linked product details
     private Integer quantity; // Quantity of product in cart
-//    private BigDecimal totalPrice; // Price * quantity
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public Long getProductId() {
+        return productId;
+    }
+
+    public void setProductId(Long productId) {
+        this.productId = productId;
+    }
+
+    public Integer getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
+    }
 }

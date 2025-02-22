@@ -20,4 +20,27 @@ public class Cart {
 //    @JsonManagedReference
     private List<CartItem> cartItem = new ArrayList<>();
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Users getUsers() {
+        return users;
+    }
+
+    public void setUsers(Users users) {
+        this.users = users;
+    }
+
+    public List<CartItem> getCartItem() {
+        return cartItem;
+    }
+
+    public void setCartItem(List<CartItem> cartItem) {
+        this.cartItem = cartItem;
+    }
 }
