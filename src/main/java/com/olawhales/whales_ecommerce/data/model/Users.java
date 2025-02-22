@@ -9,8 +9,8 @@ import java.util.List;
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter
-@Setter
+//@Getter
+//@Setter
 @Entity
 @Table(name = "users")
 public class Users {
@@ -22,7 +22,8 @@ public class Users {
     @Column(nullable = false)
     private String userName ;
 
-    @Column(nullable = false, unique = true)
+//    @Column(nullable = false, unique = true)
+    @Column(unique = true, nullable = false)
     private String email;
 
     @Column(nullable = false)
@@ -127,5 +128,22 @@ public class Users {
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private Admin admin;
+
+    @Override
+    public String toString() {
+        return "Users{" +
+                "id=" + id +
+                ", userName='" + userName + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", contact='" + contact + '\'' +
+                ", userRole=" + userRole +
+                ", dateCreated=" + dateCreated +
+                ", orders=" + orders +
+                ", seller=" + seller +
+                ", buyer=" + buyer +
+                ", admin=" + admin +
+                '}';
+    }
 }
 

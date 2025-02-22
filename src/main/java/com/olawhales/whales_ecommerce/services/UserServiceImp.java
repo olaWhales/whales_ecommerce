@@ -11,14 +11,17 @@ import com.olawhales.whales_ecommerce.data.repositories.SellerRepository;
 import com.olawhales.whales_ecommerce.data.repositories.UserRepository;
 import com.olawhales.whales_ecommerce.dto.request.usersRequest.LoginRequest;
 import com.olawhales.whales_ecommerce.dto.request.usersRequest.SignUpRequest;
+import com.olawhales.whales_ecommerce.dto.response.usersResponse.UserReg;
 import com.olawhales.whales_ecommerce.dto.response.usersResponse.UsersResponse;
+import com.olawhales.whales_ecommerce.emailService.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Optional;
 
 @Service
 public class UserServiceImp implements UserService {
@@ -33,14 +36,27 @@ public class UserServiceImp implements UserService {
         private BuyerRepository buyerRepository;
         @Autowired
         private JwtService jwtService;
+        @Autowired
+        private EmailService emailService;
 
     @Autowired
     private AdminRepository adminRepository;
     BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+//    @Autowired
+//    private JavaMailSenderImpl mailSender;
 
 
-    public UsersResponse register( SignUpRequest signUpRequest) {
-        Users user = new Users();
+    public UserReg register( SignUpRequest signUpRequest) {
+        System.out.println("this is username before registration " + signUpRequest.getUserName());
+
+        UserReg response = new UserReg();
+        Optional<Users> existingUser = userRepository.findByEmail(signUpRequest.getEmail());
+            if (existingUser.isPresent()) {
+                response.setMessage("Email already exists");
+                return response;
+            }
+
+            Users user = new Users();
         user.setUserName(signUpRequest.getUserName());
         user.setEmail(signUpRequest.getEmail());
         user.setPassword(passwordEncoder.encode(signUpRequest.getPassword()));
@@ -49,8 +65,6 @@ public class UserServiceImp implements UserService {
         user.setDateCreated(LocalDateTime.now());
         userRepository.save(user);
 
-        UsersResponse response = new UsersResponse();
-        response.setMessage("REGISTERED SUCCESSFUL");
         if (signUpRequest.getUserRole() == UserRole.SELLER){
             if (signUpRequest.getCompanyName() == null || signUpRequest.getBusinessAddress() == null) {
                 throw new IllegalArgumentException("Company name and business address are required for sellers.");
@@ -66,6 +80,14 @@ public class UserServiceImp implements UserService {
             buyer.setUser(user);
             buyerRepository.save(buyer);
         }
+
+        String subject = "`Welcome to @whalesCommerce platform";
+        String body =   "Hello " + user.getUserName() + ", \n\n Thank you for signing up at @whalesCommerce shopping application`";
+        emailService.sendEmail(user.getEmail(), subject, body);
+
+        response.setMessage("REGISTERED SUCCESSFUL");
+
+        System.out .println("Registration email sent to  " + user.getEmail());
         return response;
     }
 
