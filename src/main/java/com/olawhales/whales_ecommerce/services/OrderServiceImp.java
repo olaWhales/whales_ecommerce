@@ -4,6 +4,7 @@ import com.olawhales.whales_ecommerce.data.model.*;
 import com.olawhales.whales_ecommerce.data.repositories.*;
 import com.olawhales.whales_ecommerce.dto.request.goodsRequest.orderRequest.CheckoutCartRequest;
 import com.olawhales.whales_ecommerce.dto.response.goodsResponse.orderResponse.CheckoutCartResponse;
+import com.olawhales.whales_ecommerce.emailService.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +26,10 @@ public class OrderServiceImp implements OrderService {
     private UserRepository userRepository;
     @Autowired
     private CartItemRepository cartItemRepository;
+    @Autowired
+    private EmailService emailService ;
+    @Autowired
+    private UserService userService;
 
     @Override
     public CheckoutCartResponse checkoutCart(CheckoutCartRequest checkoutCartRequest) {
@@ -68,6 +73,8 @@ public class OrderServiceImp implements OrderService {
          * Helper method to convert cart items into order items
          */
         private List<OrderItem> createOrderItemsFromCart(Cart cart, Orders orders) {
+//            Users user;
+
             List<OrderItem> orderItems = new ArrayList<>();
             for (CartItem cartItem : cart.getCartItem()) {
                 Product product = cartItem.getProduct();
@@ -80,12 +87,13 @@ public class OrderServiceImp implements OrderService {
                 orderItem.setPrice(cartItem.getQuantity() * product.getProductPrice()); // Calculate individual item price
                 orderItems.add(orderItem);
             }
+//            String subject = "`Welcome to @whalesCommerce platform";
+//            String body =   "Hello " + user.getUserName() + ", \n\n Thank you for signing up at @whalesCommerce shopping application`";
+//            emailService.sendEmail(user.getEmail(), subject, body);
             return orderItems;
         }
 
-        /**
-         * Helper method to calculate total price of all order items
-         */
+
         private double calculateOrderTotal(List<OrderItem> orderItems) {
             return orderItems.stream()
                     .mapToDouble(item -> item.getQuantity() * item.getProduct().getProductPrice())

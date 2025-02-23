@@ -76,13 +76,13 @@ public class AdminServiceImp implements AdminService {
             throw new SecurityException("Username not found");
         }
 
-        // Get Seller's ID from Request
+        // I get Seller's ID from Request
         Long sellerId = viewAllProductRequest.getSellerId();
         if (sellerId == null) {
             throw new SecurityException("Seller id must not be null");
         }
 
-        // Verify Seller Ownership
+        // I verify Seller Ownership here
         Optional<Seller> sellerOptional = sellerRepository.findById(sellerId);
         System.out.println("this is seller found " + sellerOptional);
         if (sellerOptional.isEmpty()) {
@@ -90,21 +90,21 @@ public class AdminServiceImp implements AdminService {
         }
 
         Seller seller = sellerOptional.get();
-        // Check if the authenticated user is ADMIN
+        // I check if the authenticated user is ADMIN
         boolean isAdmin = principal.getAuthorities().stream()
                 .anyMatch(auth -> auth.getAuthority().equals("ADMIN"));
 
-        // Only check username if the user is NOT an ADMIN
+        // I only check username if the user is NOT an ADMIN
         if (!isAdmin) {
             if (!seller.getUser().getUserName().trim().equalsIgnoreCase(username.trim())) {
                 throw new SecurityException("You are not authorized to view this seller's products");
             }
         }
 
-        // Fetch Products by Seller
+        // I fetch Products by Seller
         List<Product> products = productRepository.findBySeller(seller);
 
-        // Map Products to Response
+        // I map Products to Response here
         List<ViewAllProductsResponse> productResponses = products.stream()
                 .map(this::getProductResponse)
                 .toList();

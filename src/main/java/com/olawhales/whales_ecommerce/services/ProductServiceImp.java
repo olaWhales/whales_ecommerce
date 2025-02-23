@@ -65,7 +65,7 @@ public class ProductServiceImp implements ProductService{
         }
 
         UserPrincipal principal = (UserPrincipal) authentication.getPrincipal();
-        Users user = principal.getUsers(); // Get authenticated user (seller)
+        Users user = principal.getUsers();
 
         Long productId = deleteProduct.getProductId();
         if (productId == null) {
@@ -84,7 +84,7 @@ public class ProductServiceImp implements ProductService{
         }
 
         product.setDeleted(true);
-        productRepository.save(product); //  Save update instead of deleting
+        productRepository.save(product); // I saved update instead of deleting
 
         //  Return success response
         DeleteProductResponse response = new DeleteProductResponse();
@@ -99,7 +99,7 @@ public class ProductServiceImp implements ProductService{
             throw new IllegalArgumentException("User is not authenticated");
         }
         UserPrincipal principal = (UserPrincipal) authentication.getPrincipal();
-        Users user = principal.getUsers(); // Get authenticated user (seller// )
+        Users user = principal.getUsers();
 
         Long productId = updateProduct.getId();
         if (productId == null) {

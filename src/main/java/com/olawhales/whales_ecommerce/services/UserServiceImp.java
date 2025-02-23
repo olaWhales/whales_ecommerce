@@ -42,8 +42,6 @@ public class UserServiceImp implements UserService {
     @Autowired
     private AdminRepository adminRepository;
     BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-//    @Autowired
-//    private JavaMailSenderImpl mailSender;
 
 
     public UserReg register( SignUpRequest signUpRequest) {

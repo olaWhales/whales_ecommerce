@@ -35,15 +35,15 @@ public class CartServiceImp implements CartService {
         Long productId = createCartItemRequest.getProductId();
         Product product = productRepository.findById(productId)
                 .orElseThrow(() -> new RuntimeException("Product not found"));
-        // Find or Create Cart
+        // I Created Cart
         Cart cart = cartRepository.findByUsers(user);
         if (cart == null) {
             cart = new Cart();
             cart.setUsers(user);
-            cartRepository.save(cart); // Save new cart
+            cartRepository.save(cart);
             System.out.println("This is cart " + cart);
         }
-        // Add item to cart
+        //I added item to cart
         CartItem cartItem = new CartItem();
         cartItem.setProduct(product);
         cartItem.setQuantity(createCartItemRequest.getQuantity());
@@ -54,7 +54,6 @@ public class CartServiceImp implements CartService {
         CreateCartItemResponse createCartItemResponse = new CreateCartItemResponse();
         createCartItemResponse.setProductId(cartItem.getProduct().getId());
         createCartItemResponse.setQuantity(cartItem.getQuantity());
-//        createCartItemResponse.setPrice(product.getProductPrice() * cartItem.getQuantity());
         createCartItemResponse.setPrice(calculateCartTotal(cart));
         return createCartItemResponse;
     }

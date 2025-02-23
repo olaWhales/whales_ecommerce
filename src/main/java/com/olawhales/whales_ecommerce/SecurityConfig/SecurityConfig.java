@@ -45,7 +45,7 @@ public class SecurityConfig extends WebSecurityConfiguration {
                         .requestMatchers("/cart/addToCart/").permitAll()
                         .requestMatchers("/cart/removeFromCart/").permitAll()
                         .requestMatchers("/cart/deleteCart/").hasAuthority("BUYER")
-                        .requestMatchers("/order/order/").hasAuthority("BUYER")
+                        .requestMatchers("/order/order/").permitAll()
                         .requestMatchers("/admin/view_single_seller_products").hasAuthority("ADMIN")
                         .anyRequest().authenticated())
                 .httpBasic(Customizer.withDefaults())
