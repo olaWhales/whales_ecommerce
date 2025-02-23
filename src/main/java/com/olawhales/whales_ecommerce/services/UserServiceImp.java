@@ -13,10 +13,8 @@ import com.olawhales.whales_ecommerce.dto.request.usersRequest.LoginRequest;
 import com.olawhales.whales_ecommerce.dto.request.usersRequest.SignUpRequest;
 import com.olawhales.whales_ecommerce.dto.response.usersResponse.UserReg;
 import com.olawhales.whales_ecommerce.dto.response.usersResponse.UsersResponse;
-import com.olawhales.whales_ecommerce.emailService.EmailService;
+import com.olawhales.whales_ecommerce.emailSpringEventPackage.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.javamail.JavaMailSenderImpl;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -24,7 +22,7 @@ import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Service
-public class UserServiceImp implements UserService {
+public class UserServiceImp implements UserService  {
 
         @Autowired
         private UserRepository userRepository;

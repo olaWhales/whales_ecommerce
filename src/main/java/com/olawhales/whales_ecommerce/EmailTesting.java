@@ -1,6 +1,6 @@
 package com.olawhales.whales_ecommerce;
 
-import com.olawhales.whales_ecommerce.emailService.EmailService;
+import com.olawhales.whales_ecommerce.emailSpringEventPackage.EmailService;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;

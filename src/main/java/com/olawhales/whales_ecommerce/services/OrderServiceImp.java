@@ -4,7 +4,6 @@ import com.olawhales.whales_ecommerce.data.model.*;
 import com.olawhales.whales_ecommerce.data.repositories.*;
 import com.olawhales.whales_ecommerce.dto.request.goodsRequest.orderRequest.CheckoutCartRequest;
 import com.olawhales.whales_ecommerce.dto.response.goodsResponse.orderResponse.CheckoutCartResponse;
-import com.olawhales.whales_ecommerce.emailService.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,8 +25,8 @@ public class OrderServiceImp implements OrderService {
     private UserRepository userRepository;
     @Autowired
     private CartItemRepository cartItemRepository;
-    @Autowired
-    private EmailService emailService ;
+//    @Autowired
+//    private EmailService emailService ;
     @Autowired
     private UserService userService;
 
