@@ -107,7 +107,22 @@
 			<artifactId>jackson-databind</artifactId>
 			<version>2.15.0</version>
 		</dependency>
-<!--		<dependency>-->
+
+<!--		<dependency>
+	<groupId>com.cloudinary</groupId>&ndash;&gt;-->
+		<dependency>
+			<groupId>com.cloudinary</groupId>
+			<artifactId>cloudinary-http44</artifactId>
+			<version>1.34.0</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-api -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>2.0.17</version>
+		</dependency>
+
+        <!--		<dependency>-->
 <!--			<groupId>org.springframework.boot</groupId>-->
 <!--			<artifactId>spring-boot-starter-webflux</artifactId>-->
 <!--		</dependency>-->

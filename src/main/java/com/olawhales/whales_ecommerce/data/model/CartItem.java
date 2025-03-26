@@ -2,9 +2,12 @@ package com.olawhales.whales_ecommerce.data.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 @Entity
 //@Data
@@ -19,12 +22,40 @@ public class CartItem {
     @JoinColumn(name = "cart_id")
     @JsonBackReference
     private Cart cart;
+//
+//    @OneToMany(mappedBy = "cartItem", cascade = CascadeType.ALL)
+//    private List<RegisterProduct> products;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "product_id" , nullable = false)
+    @ManyToOne  // Each cart item is linked to ONE product
     private Product product;
 
+
+
+//    @ManyToOne
+//    private RegisterProduct product;
+
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "product_id" , nullable = false)
+//    private List<RegisterProduct> product = new ArrayList<>();
+
+
+//    @ManyToMany
+//    @JoinTable(
+//
+//            inverseJoinColumns = @JoinColumn(name = "product_id")
+//    )
+//    private  List <RegisterProduct> product  = new ArrayList<>();
+
     private int quantity;
+
+
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
+    }
 
     public Long getId() {
         return id;
@@ -42,13 +73,6 @@ public class CartItem {
         this.cart = cart;
     }
 
-    public Product getProduct() {
-        return product;
-    }
-
-    public void setProduct(Product product) {
-        this.product = product;
-    }
 
     public int getQuantity() {
         return quantity;

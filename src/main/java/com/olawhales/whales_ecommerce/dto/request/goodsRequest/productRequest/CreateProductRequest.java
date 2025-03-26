@@ -1,23 +1,39 @@
 package com.olawhales.whales_ecommerce.dto.request.goodsRequest.productRequest;
 
-import com.olawhales.whales_ecommerce.data.model.Seller;
+import jakarta.persistence.Column;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+import org.springframework.web.multipart.MultipartFile;
 
+@Setter
+@Getter
 @Data
 public class CreateProductRequest {
-    private Long sellerId;
+//    private Long sellerId;
     private String productName;
     private String productDescription;
     private Double productPrice;
     private Integer productQuantity;
 
+    @Column()
+    private MultipartFile images ;
 
-    public Long getSellerId() {
-        return sellerId;
+//    public Long getSellerId() {
+//        return sellerId;
+//    }
+//
+//    public void setSellerId(Long sellerId) {
+//        this.sellerId = sellerId;
+//    }
+
+
+    public MultipartFile getImages() {
+        return images;
     }
 
-    public void setSellerId(Long sellerId) {
-        this.sellerId = sellerId;
+    public void setImages(MultipartFile images) {
+        this.images = images;
     }
 
     public String getProductName() {

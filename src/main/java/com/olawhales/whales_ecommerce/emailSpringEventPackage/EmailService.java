@@ -7,9 +7,9 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
 @Service
+//@AllArgsConstructor
 public class EmailService {
-
-    private final JavaMailSender mailSender;
+    private JavaMailSender mailSender;
 
     public EmailService(JavaMailSender mailSender) {
         this.mailSender = mailSender;

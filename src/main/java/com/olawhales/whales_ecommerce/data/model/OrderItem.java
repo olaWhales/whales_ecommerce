@@ -22,7 +22,7 @@ public class OrderItem {
     @OneToOne(cascade = CascadeType.ALL)
     private Address address ;
     @ManyToOne
-    @JoinColumn(name = "order_id", nullable = false)  // ✅ Ensure it references Order
+    @JoinColumn(name = "order_id", nullable = false)  // Ensure it references Order
     private Orders orders;
 
     @ManyToOne

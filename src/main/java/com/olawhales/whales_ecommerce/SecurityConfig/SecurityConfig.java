@@ -17,13 +17,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.session.SessionManagementFilter;
 import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-import org.springframework.web.filter.CorsFilter;
 
 import java.util.List;
-
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfiguration {
@@ -50,10 +46,8 @@ public class SecurityConfig extends WebSecurityConfiguration {
                         .anyRequest().authenticated())
                 .httpBasic(Customizer.withDefaults())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-//                .addFilterBefore(corsFilter() , SessionManagementFilter.class);
-//                        .addFilterBefore(jwtFilter , Sess ionManagementFilter.class);
-                        .addFilterBefore(jwtFilter , UsernamePasswordAuthenticationFilter.class)
-                        .cors(cors -> cors.configurationSource(request -> {
+                .addFilterBefore(jwtFilter , UsernamePasswordAuthenticationFilter.class)
+                .cors(cors -> cors.configurationSource(request -> {
             var config = new CorsConfiguration();
             config.setAllowedOrigins(List.of("http://localhost:5173")); // Frontend URL
             config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
@@ -63,17 +57,17 @@ public class SecurityConfig extends WebSecurityConfiguration {
         }));
         return httpSecurity.build();
     }
-
-    private CorsFilter corsFilter() {
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        CorsConfiguration config = new CorsConfiguration();
-        config.setAllowCredentials(true); // Allow cookies or credentials
-        config.addAllowedOriginPattern("*"); // Allow all origins (replace * with specific domains in production)
-        config.addAllowedHeader("*"); // Allow all headers
-        config.addAllowedMethod("*"); // Allow all HTTP methods
-        source.registerCorsConfiguration("/**", config); // Apply this CORS configuration to all endpoints
-        return new CorsFilter(source);
-    }
+//
+//    private CorsFilter corsFilter() {
+//        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+//        CorsConfiguration config = new CorsConfiguration();
+//        config.setAllowCredentials(true); // Allow cookies or credentials
+//        config.addAllowedOriginPattern("*"); // Allow all origins (replace * with specific domains in production)
+//        config.addAllowedHeader("*"); // Allow all headers
+//        config.addAllowedMethod("*"); // Allow all HTTP methods
+//        source.registerCorsConfiguration("/**", config); // Apply this CORS configuration to all endpoints
+//        return new CorsFilter(source);
+//    }
 
         @Bean
     public AuthenticationProvider authenticationProvider(UserDetailsService userDetailsService){
@@ -89,5 +83,12 @@ public class SecurityConfig extends WebSecurityConfiguration {
     @Bean
     public BCryptPasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
+    }
+
+    @Override
+    public String toString() {
+        return "SecurityConfig{" +
+                "jwtFilter=" + jwtFilter +
+                '}';
     }
 }

@@ -6,6 +6,7 @@ import lombok.Data;
 import org.springframework.security.core.userdetails.User;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @Data
 public class CreateCartItemRequest {

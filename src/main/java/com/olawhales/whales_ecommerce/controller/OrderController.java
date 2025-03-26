@@ -1,7 +1,7 @@
 package com.olawhales.whales_ecommerce.controller;
 
 import com.olawhales.whales_ecommerce.dto.request.goodsRequest.orderRequest.CheckoutCartRequest;
-import com.olawhales.whales_ecommerce.services.OrderService;
+import com.olawhales.whales_ecommerce.services.orderProcess.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

@@ -13,6 +13,8 @@ import lombok.Setter;
 //@Setter
 @Entity
 @Table(name = "users")
+@Setter
+@Getter
 public class Users {
 
     @Id
@@ -37,6 +39,8 @@ public class Users {
 
     @Column(nullable = false)
     private LocalDateTime dateCreated;
+
+
     @OneToMany
     private List<Orders> orders = new ArrayList<>();
 
@@ -128,22 +132,22 @@ public class Users {
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private Admin admin;
-
-    @Override
-    public String toString() {
-        return "Users{" +
-                "id=" + id +
-                ", userName='" + userName + '\'' +
-                ", email='" + email + '\'' +
-                ", password='" + password + '\'' +
-                ", contact='" + contact + '\'' +
-                ", userRole=" + userRole +
-                ", dateCreated=" + dateCreated +
-                ", orders=" + orders +
-                ", seller=" + seller +
-                ", buyer=" + buyer +
-                ", admin=" + admin +
-                '}';
-    }
+//
+//    @Override
+//    public String toString() {
+//        return "Users{" +
+//                "id=" + id +
+//                ", userName='" + userName + '\'' +
+//                ", email='" + email + '\'' +
+//                ", password='" + password + '\'' +
+//                ", contact='" + contact + '\'' +
+//                ", userRole=" + userRole +
+//                ", dateCreated=" + dateCreated +
+//                ", orders=" + orders +
+//                ", seller=" + seller +
+//                ", buyer=" + buyer +
+//                ", admin=" + admin +
+//                '}';
+//    }
 }
 

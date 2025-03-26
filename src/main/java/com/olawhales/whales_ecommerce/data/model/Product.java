@@ -15,11 +15,43 @@ public class Product {
     private String productDescription;
     private Double productPrice;
     private Integer productQuantity;
+    private String IdGenerator;
 
     @ManyToOne
     @JoinColumn (name = "seller_id")
     @JsonBackReference
     private Seller seller;
+
+
+    @Column(nullable = false)
+    private String images ;
+
+    public String getImages() {
+        return images;
+    }
+
+    public void setImages(String images) {
+        this.images = images;
+    }
+
+    @ManyToOne
+    private CartItem cartItem;  // This is what `mappedBy = "cartItem"` expects
+
+    public String getIdGenerator() {
+        return IdGenerator;
+    }
+
+    public void setIdGenerator(String idGenerator) {
+        IdGenerator = idGenerator;
+    }
+
+    public CartItem getCartItem() {
+        return cartItem;
+    }
+
+    public void setCartItem(CartItem cartItem) {
+        this.cartItem = cartItem;
+    }
 
     private boolean isDeleted = false; // Soft delete
 

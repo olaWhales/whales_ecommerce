@@ -2,8 +2,7 @@ package com.olawhales.whales_ecommerce.controller;
 
 import com.olawhales.whales_ecommerce.dto.request.adminRequest.AdminRegRequest;
 import com.olawhales.whales_ecommerce.dto.request.adminRequest.ViewAllProductRequest;
-import com.olawhales.whales_ecommerce.services.AdminService;
-import com.olawhales.whales_ecommerce.services.AdminServiceImp;
+import com.olawhales.whales_ecommerce.services.Admin.AdminServiceImp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

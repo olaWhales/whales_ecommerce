@@ -1,22 +1,17 @@
 package com.olawhales.whales_ecommerce.data.model;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.stereotype.Component;
 
 import java.util.Collection;
 import java.util.Collections;
 
-//@Component
-public class UserPrincipal implements UserDetails {
-    private final Users users;
-    public UserPrincipal(Users users) {
-        this.users = users;
-    }
-//    @Autowired
-//    private Users users;
+@Getter
+@Setter
+public record UserPrincipal(Users users) implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -57,7 +52,10 @@ public class UserPrincipal implements UserDetails {
         return true;
     }
 
-    public Users getUsers() {
-        return users;
+    @Override
+    public String toString() {
+        return "UserPrincipal{" +
+                "users=" + users +
+                '}';
     }
 }

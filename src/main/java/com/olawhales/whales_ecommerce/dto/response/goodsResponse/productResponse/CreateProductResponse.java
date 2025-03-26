@@ -1,5 +1,6 @@
 package com.olawhales.whales_ecommerce.dto.response.goodsResponse.productResponse;
 
+import com.olawhales.whales_ecommerce.SecurityConfig.IdGenerator;
 import lombok.Data;
 
 @Data
@@ -10,6 +11,15 @@ public class CreateProductResponse {
     private String productDescription;
     private Double productPrice;
     private Integer productQuantity;
+    private String idGenerator ;
+
+    public String getIdGenerator() {
+        return idGenerator;
+    }
+
+    public void setIdGenerator(String idGenerator) {
+        this.idGenerator = idGenerator;
+    }
 
     public Long getSellerId() {
         return sellerId;
